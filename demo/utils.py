@@ -2,7 +2,8 @@ import os
 import json
 import openai
 from dotenv import load_dotenv
-from deepgram import DeepgramClient, PrerecordedOptions, SpeakOptions
+from deepgram import DeepgramClient, PrerecordedOptions, SpeakOptions, DeepgramClientOptions
+from deepgram.utils import verboselogs
 
 load_dotenv()
 
@@ -13,8 +14,12 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not DG_API_KEY or not OPENAI_API_KEY:
     raise ValueError("Please set the DG_API_KEY and/or OPENAI_API_KEY environment variable.")
 
-deepgram = DeepgramClient(DG_API_KEY)
 
+
+deepgram = DeepgramClient(DG_API_KEY)
+config: DeepgramClientOptions = DeepgramClientOptions(
+    verbose=verboselogs.DEBUG
+)
 
 openai_client = openai.OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY")
@@ -61,7 +66,6 @@ def ask_openai(prompt):
             ],
             temperature=0.7
         )
-        print("RESPONSE",response)
         return response.choices[0].message.content
     except openai.OpenAIError as e:
         return f"An error ocurred: {e}"
@@ -87,9 +91,9 @@ def get_topics(transcript):
     return topics
 
 def get_summary(transcript):
-    """
-    returns the summary of the transcript as a string.
-    """
+    # """
+    # returns the summary of the transcript as a string.
+    # """
     return transcript['results']['summary']['short']
 
 def save_speech_summary(transcript, options=speak_options):

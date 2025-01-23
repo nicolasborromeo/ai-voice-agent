@@ -4,6 +4,7 @@ from deepgram.utils import verboselogs
 from dotenv import load_dotenv
 from deepgram import (
     DeepgramClient,
+    DeepgramClientOptions,
     SpeakOptions
 )
 
@@ -19,7 +20,12 @@ def main():
         raise ValueError("Please set the DG_API_KEY environment variables")
 
     try:
-        deepgram = DeepgramClient(API_KEY)
+        config: DeepgramClientOptions = DeepgramClientOptions(
+            verbose=verboselogs.DEBUG
+        )
+
+        deepgram = DeepgramClient(API_KEY, config)
+        # print(help(deepgram.speak))
 
         options = SpeakOptions(
             model="aura-asteria-en",

@@ -1,6 +1,8 @@
 import utils
 from deepgram import FileSource
 
+
+
 AUDIO_FILE = "sample.mp3"
 
 def main():
@@ -20,7 +22,7 @@ def main():
         # Extract the transcribed text from the Deepgram response
         transcribed_text = customer_inquiry["results"]["channels"][0]["alternatives"][0]["transcript"]
         agent_answer = utils.ask_openai(transcribed_text)
-        print(agent_answer)
+
 
         # STEP 4: Print responses (optional) that can be used for integration with an app or stored in a customer database for analytics
         print('Topics:', utils.get_topics(customer_inquiry))
@@ -32,6 +34,7 @@ def main():
 
     except Exception as e:
         print(f"Exception: {e}")
+
 
 
 #This ensures that the code inside main() only runs when the script is executed directly, not when imported as a module.

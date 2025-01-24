@@ -91,9 +91,9 @@ def get_topics(transcript):
     return topics
 
 def get_summary(transcript):
-    # """
-    # returns the summary of the transcript as a string.
-    # """
+    """
+    returns the summary of the transcript as a string.
+    """
     return transcript['results']['summary']['short']
 
 def save_speech_summary(transcript, options=speak_options):
